@@ -7,14 +7,13 @@ using namespace std;
 
 int tc, t;
 int P, Q;
-char str1[10][80];
-char str2[10][80];
+char str1[11][81];
+char str2[11][81];
 
 const char l_brackets[3] = {'(', '{', '['};
 const char r_brackets[3] = {')', '}', ']'};
-int num[3];
 vector<vector<int>> equations;
-
+int num[3];
 bool solution[21][21][21];
 
 bool DEBUG = false;
@@ -29,9 +28,6 @@ int main() {
     t = 0;
     while(t++ < tc) {
 
-        for(int i=0; i<3; i++)
-            num[i] = 0;
-
         scanf("%d%d", &P, &Q);
 //        cout << P << ", " << Q << "\n";
 
@@ -41,14 +37,15 @@ int main() {
             scanf("%s", str2[i]);
 
         // initialize.
+        equations.clear();
         for(int i=0; i<3; i++)
             num[i] = 0;
-        equations.clear();
         for(int x=1; x<=20; x++)
             for(int y=1; y<=20; y++)
                 for(int z=1; z<=20; z++)
                     solution[x][y][z] = true;
 
+        // get equations from first P lines.
         for(int i=0; i<P; i++) {
 
             int j = 0;
@@ -74,18 +71,13 @@ int main() {
             }
         }
 
-//        sort(equations.begin(), equations.end(), equation_comparator);
-
 //        for(int i=0; i<P; i++) {
 //            for(int j=0; j<4; j++)
 //                cout << equations[i][j] << " ";
 //            cout << "\n";
 //        }
 
-//        list<vector<int>> solutions;
-
         // O(10*8000) ~= O(10^5)
-
         for(int i=0; i<P; i++) {
 
             vector<int> args = equations[i];
@@ -107,16 +99,11 @@ int main() {
 //        for(int x=1; x<=20; x++) {
 //            for(int y=1; y<=20; y++) {
 //                for(int z=1; z<=20; z++) {
-//
 //                    if(solution[x][y][z])
 //                        cout << x << " " << y << " " << z << "\n";
 //                }
 //            }
 //        }
-
-//        for(int i=0; i<3; i++)
-//            cout << num[i] << " ";
-//        cout << "\n";
 
         vector<vector<int>> solutions;
 
@@ -128,12 +115,9 @@ int main() {
 
         printf("#%d", t);
 
-        // TODO
-        // iterate Q lines, and if there exists more than two indent candidates,
-        // print -1.
+        // iterate Q lines, and if there exists more than two indent values, print -1.
         for(int i=0; i<Q; i++) {
 
-//            int r, c, s;
             int indent = 0;
             bool determined = false;
 
