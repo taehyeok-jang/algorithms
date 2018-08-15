@@ -5,6 +5,19 @@
  * https://algs4.cs.princeton.edu/15uf/
  */
 
+// compact version.
+class UF {
+public:
+    int parent[MAX];
+    int size[MAX];
+    UF() { for(int i=0; i<MAX; i++) parent[i]=i, size[i]=1; }
+    int find(int p) { while(p!=parent[p]) p=parent[p]; return p; }
+    bool connected(int p, int q) { return find(p)==find(q); }
+    void merge(int p, int q) { int rp = find(p); int rq = find(q); if (rp == rq) return;
+        if(size[rp]<size[rq]) { parent[rp] = rq; size[rq]+=size[rp]; } else { parent[rq] = rp; size[rp]+= size[rq]; } }
+};
+
+// weighted union-find with path compression.
 class UnionFind {
 
 private:

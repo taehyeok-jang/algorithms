@@ -10,8 +10,6 @@ char str[100];
 
 bool visited[100][100];
 
-int dx[4] = {-1, 0, 1, 0};
-int dy[4] = {0, 1, 0, -1};
 
 bool DEBUG = false;
 
@@ -32,8 +30,6 @@ void dfs(int x, int y, int h) {
         if(MAP[nx][ny] > h)
             dfs(nx, ny, h);
     }
-
-
 }
 
 int main() {
@@ -78,3 +74,4 @@ int main() {
 
     return 0;
 }
+
