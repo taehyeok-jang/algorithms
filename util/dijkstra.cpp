@@ -14,7 +14,7 @@ private:
     int start;
     int V;
     vector<vector<pair<int, int>>> adjs; // adjs[0]: dummy, pair<v, weight>
-    int *prev;
+//    int *prev;
     long long *d;
 
 public:
@@ -23,18 +23,17 @@ public:
         start = s;
         V = v;
         adjs = a;
-        prev = new int[V+1];
-        memset(prev, -1, sizeof(int)*(V+1));
+//        prev = new int[V+1];
+//        memset(prev, -1, sizeof(int)*(V+1));
         d = new long long[V+1];
 
         initialize();
     }
 
     void initialize() {
-        // pq sorted by pair.first.
+        // pair sorted by pair.first. (edge weight)
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        for(int i=0; i<V+1; i++)
-            d[i] = INF;
+        for(int i=0; i<V+1; i++) d[i] = INF;
         bool inMST[V+1];
         memset(inMST, 0, sizeof(bool)*(V+1));
 
@@ -43,19 +42,18 @@ public:
 
         while(!pq.empty()) {
 
-            int u = pq.top().second;
+            int u = pq.top().second; // O(VlogE)
             pq.pop();
             inMST[u] = true;
 
-            for(auto edge: adjs[u]) {
+            for(auto edge: adjs[u]) { // O(ElogE)
                 // (u, v)
                 int v = edge.first;
                 int weight = edge.second;
-                if(!inMST[v] && d[u]+weight<d[v]) {
-
+                if(!inMST[v]&&d[u]+weight<d[v]) {
                     d[v] = d[u]+weight;
                     pq.push(make_pair(d[v], v));
-                    prev[v] = u;
+//                    prev[v] = u;
                 }
             }
         }

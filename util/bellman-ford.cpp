@@ -22,12 +22,10 @@ private:
     int start;
     int V;
     vector<vector<pair<int, int>>> adjs; // adjs[0]: dummy, pair<v, weight>
-    int *path;
     long long *d;
 
 public:
     BellmanFord(int s, int v, vector<vector<pair<int, int>>> &a) {
-
         start = s;
         V = v;
         adjs = a;
@@ -35,15 +33,13 @@ public:
     }
 
     bool solve() {
-
         vector<edge> edges;
         for(int i=0; i<V+1; i++)
-            for(int j=0; j<adjs[i].size(); j++)
+            for(int j=0; j<adjs[i].size(); j++) // (u, v, weight).
                 edges.push_back({i, adjs[i][j].first, adjs[i][j].second});
-
-        for(int i=0; i<V+1; i++)
-            d[i] = INF;
+        for(int i=0; i<V+1; i++) d[i] = INF;
         d[start] = 0;
+        // -----
 
         for(int i=1; i<V; i++) {
             for(auto edge: edges) {
@@ -51,7 +47,7 @@ public:
                     d[edge.v] = d[edge.u]+edge.w;
             }
         }
-
+        // check negative cycle.
         for(auto edge: edges)
             if(d[edge.u]+edge.w<d[edge.v])
                 return false;

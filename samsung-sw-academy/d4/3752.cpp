@@ -33,7 +33,6 @@ int main() {
         }
 
         sum[0] = true;
-
         for(int i=0; i<N; i++)
             for(int j=MAX; j>=0; j--)
                 if(sum[j])

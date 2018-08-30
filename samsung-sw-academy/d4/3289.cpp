@@ -6,24 +6,18 @@ using namespace std;
 int tc, t;
 int n, m;
 
-// weighted-quickunion UF
-//struct UnionFind {
-//    int count;
-//    int* parent;
-//    int* size;
-//} UF;
-
+// weighted quick union with path compression.
 struct UnionFind {
     int count;
     int parent[1000001];
     int size[1000001];
 } UF;
 
-
 int find(int p) {
     int root = p;
     while (root != UF.parent[root])
         root = UF.parent[root];
+    // path compression.
     while (p != root) {
         int newp = UF.parent[p];
         UF.parent[p] = root;
@@ -37,7 +31,8 @@ void _union(int p, int q) {
     int rootQ = find(q);
     if(rootP == rootQ)
         return;
-    // make smaller root point to larger one
+
+    // give weight to larger one by small one.
     if (UF.size[rootP] < UF.size[rootQ]) {
         UF.parent[rootP] = rootQ;
         UF.size[rootQ] += UF.size[rootP];
