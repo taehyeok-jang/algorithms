@@ -1,74 +1,53 @@
 #include <iostream>
-#include <cmath>
-#include <algorithm>
 #include <cstring>
-#include <vector>
 
 using namespace std;
 
+#define MAX 1000000001 // 10^9
+#define sqrt_MAX 31623 // 10^4.5
+#define OVERFLOW 0
+
+// arr[i][j]. the value of decimal number, which is 11...1(i) of length j.
+int arr[sqrt_MAX][31]; // memory ~= 10^6.
 int tc, t;
-int P, Q;
-
-//#define DEBUG 1
-#ifdef DEBUG
-#endif
-
-int f(int n) {
-
-    // TODO
-
-
-}
-
-void convert(int n, int b) {
-
-    vector<int> vec;
-    while(n>0) {
-        vec.push_back(n%b);
-        n /= b;
-    }
-    bool equal = 1;
-    for(int i=0; i<vec.size()-1; i++)
-        if(vec[i]!=vec[i+1]) {
-            equal = 0; break;
-        }
-
-    if(equal) {
-        cout << b << "\' ";
-        for(int i=0; i<vec.size(); i++)
-            cout << vec[vec.size()-i-1] << " ";
-        printf("\n");
-    }
-}
+int N;
 
 int main() {
 
-//    FILE *fp = freopen("../data/3501.input", "r", stdin);
-//    if(!fp)
-//        perror("freopen error");
-
-
-
-    for(int i=1; i<2; i++) {
-        cout << "n: " << i << "\n";
-        for(int b=2; b<=9998; b++) {
-//            cout << b << "\' ";
-            convert(9998, b);
-//            for(int k=0; k<v.size(); k++)
-//                cout << v[k];
-//            cout << "\n";
+    // pre process.
+    long long n;
+    for(int i=2; i<sqrt_MAX; i++) // O(10^4.5*31) ~= O(10^6)
+        for(int j=2; j<32; j++) {
+            if(j==2) { arr[i][j] = i+1; continue; }
+            n = (long long)arr[i][j-1]*i+1;
+            if(n<MAX) arr[i][j] = n;
+            else break;
         }
+
+    scanf("%d", &tc);
+    t = 0;
+    while(t++ < tc) {
+
+        scanf("%d", &N);
+        long long ans = 0;
+
+        // 2 digits.
+        for(int a=1; a<(N/a-1); a++)  // O(sqrt(N))
+            ans += ((N/a-2)*(N/a+1))/2; // sum of 2~N/a-1.
+
+        // more than 3 digits.
+        for(int a=1; a*a<(N/a-1); a++) { // O(sqrt(N))
+            for(int i=2; i*i+i+1<=N/a; i++) { // O(sqrt(N)) ... O(N^(1/4)).
+                for(int j=3; j<31; j++) { // O(C).
+                    if(arr[i][j]==OVERFLOW) break;
+                    if(arr[i][j]*a<=N) ans++;
+                    else break;
+                }
+            }
+        }
+        printf("#%d %lld\n", t, ans);
     }
-
-
-//    scanf("%d", &tc);
-//    t = 0;
-//    while(t++ < tc) {
-//
-//
-//
-////        printf("#%d %d\n", t, a);
-//    }
 
     return 0;
 }
+

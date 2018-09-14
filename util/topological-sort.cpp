@@ -1,6 +1,5 @@
 
 class graph {
-
     int V;
     list<int> *adjs;
 

@@ -16,10 +16,10 @@ vector<vector<int>> node;
 int dfs(int here) {
     if (visited[here]) return 0;
     visited[here] = 1;
-    for (int i = 0; i<node[here].size(); i++) {
+    for(int i=0; i<node[here].size(); i++) {
         int there = node[here][i];
-        if (b[there]==-1||dfs(b[there])) {
-            b[there] = here;
+        if(b[there]==-1||dfs(b[there])) {
+            b[there] = here; // a' here <-> b' there.
             return 1;
         }
     }
@@ -29,7 +29,7 @@ int bmatch() {
     int ret = 0;
     for (int i=0; i<N; i++) {
         memset(visited, 0, sizeof(bool)*MAX_N);
-        if (dfs(i))ret++;
+        if(dfs(i)) ret++;
     }
     return ret;
 }
