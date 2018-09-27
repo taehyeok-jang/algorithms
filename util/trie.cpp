@@ -11,9 +11,9 @@ struct node {
 };
 node* create_node(void) {
     node* p = new node();
-    p->end = false;
     for(int i=0; i<SIZE; i++)
         p->children[i] = 0;
+    p->end = false;
     return p;
 }
 void insert(node* root, string key) {
@@ -43,6 +43,7 @@ void destruct(node* root) {
             destruct(p->children[i]);
     delete p;
 }
+
 void traverse(node *root) {
     node* p = root;
     for(int i=0; i<SIZE; i++)

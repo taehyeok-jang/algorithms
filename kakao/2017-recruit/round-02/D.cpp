@@ -21,15 +21,11 @@ void pre_process(string p, int *lps, int m) {
 }
 bool match(string pattern, int *lps, string txt) {
 
-    int m = pattern.size();
-    int n = txt.size();
-
-    int i = 0;
-    int j = 0;
+    int m = pattern.size(), n = txt.size();
+    int i = 0, j = 0;
     while(i<n) {
         if(pattern[j]==txt[i])
             j++, i++;
-
         if(j==m) {
             return 1;
         }
@@ -84,14 +80,15 @@ string solution(string m, vector<string> musicinfos) {
     for(int i=0; i<musicinfos.size(); i++) {
 
         parse(musicinfos[i], start, end, title, info);
+        info = tokenize(info);
         if(info.size()>end-start)
             info = info.substr(0, end-start);
-        info = tokenize(info);
 
-        string duplicate = "";
-        duplicate += info; duplicate += info;
+        string dup = info;
+        while(dup.size()<end-start) dup += info;
 
-        if(m.size()<duplicate.size()? match(m, lps, duplicate):match(duplicate, lps, m)) {
+//        if(m.size()<=end-start&&dup.find(m, 0)!=string::npos) {
+        if(m.size()<=end-start&&match(m, lps, dup)) {
             if(is_match) {
                 if(duration<end-start) {
                     duration = end-start;
@@ -108,19 +105,69 @@ string solution(string m, vector<string> musicinfos) {
 
     return is_match? ans:"(None)";
 }
+/*
+
+string solution(string m, vector<string> musicinfos) {
+
+    m = tokenize(m);
+    int lps[m.size()];
+    pre_process(m, lps, m.size());
+
+    int start, end; string ans, title, info;
+    bool is_match = 0; int duration = 0;
+    for(int i=0; i<musicinfos.size(); i++) {
+
+        parse(musicinfos[i], start, end, title, info);
+        info = tokenize(info);
+        if(info.size()>end-start)
+            info = info.substr(0, end-start);
+
+        string dup = info;
+        while(dup.size()<end-start) dup += info;
+
+//        if(dup.find(m, 0)<string::npos) {
+        if(match(m, lps, dup)&&m.size()<=end-start) {
+            if(is_match) {
+                // 조건이 일치하는 음악이 여러 개일 때에는 라디오에서 재생된 시간이 제일 긴 음악 제목을 반환한다.
+                // 재생된 시간도 같을 경우 먼저 입력된 음악 제목을 반환한다.
+                if(duration<end-start) {
+                    duration = end-start;
+                    ans = title;
+                }
+            }
+            else {
+                is_match = 1;
+                duration = end-start;
+                ans = title;
+            }
+        }
+    }
+
+    return is_match? ans:"(None)";
+}*/
 
 int main() {
+
+    string pp = "a";
+    string txt = "abc";
+    cout << (txt.find(pp, 0)!=string::npos) << "\n";
+
+//    pos = inf.find(m, pos)) != std::string::npos
 
     string m[3] = {"ABCDEFG", "CC#BCC#BCC#BCC#B", "ABC"};
 
     vector<vector<string>> tt(3);
-    for(int i=0; i<3; i++) tt[i].resize(2);
+//    for(int i=0; i<3; i++) tt[i].resize(2);
     tt[0] = {"12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"};
     tt[1] = {"03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B"};
     tt[2] = {"12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"};
 
     for(int i=0; i<3; i++)
         cout << "sol @@@@@: " << solution(m[i], tt[i]) << "\n";
+
+    vector<string> ttt = { "03:00,03:00,FOO,A" };
+    cout<<solution("A", ttt);
+
 
     return 0;
 }
