@@ -4,7 +4,7 @@
 
 /**
  * Bipartite Match
- * Time Complexity: O(VE). for each vertext, it can iterate maximum amortized E. so O(VE).
+ * Time Complexity: O(VE). for each vertex, it can iterate maximum amortized E. so O(VE).
  */
 using namespace std;
 

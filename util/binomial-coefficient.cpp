@@ -22,8 +22,12 @@ int brute_force_combination(int n, int r);
  * time: O(log N), space: O(1).
  * same as generating binary num from decimal.
  * x = x^1, x^2, x^4, x^8 -> x = x^(2^0), x^(2^1), x^(2^2), x^(2^3)...
+ *
+ * @@ watch-out!
+ * cuz p is big number, x, y can easily be over integer's max-value.
+ * so we should get parameter x, y as long long.
  */
-int pow(int x, int y, int p) {
+int pow(ll x, ll y, int p) {
     long long ans = 1;
     while(y>0) {
         if(y%2>0) {

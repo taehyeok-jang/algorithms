@@ -39,7 +39,6 @@ public:
                 edges.push_back({i, adjs[i][j].first, adjs[i][j].second});
         for(int i=0; i<V+1; i++) d[i] = INF;
         d[start] = 0;
-        // -----
 
         for(int i=1; i<V; i++) {
             for(auto edge: edges) {

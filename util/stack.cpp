@@ -5,7 +5,9 @@ struct stack {
     void push(int a) { arr[st++] = a; }
     int pop() { return arr[--st]; }
     // or
-//    void push(int a) { arr[++st] = a; }
-//    int pop() { return arr[st--]; }
+    /**
+    void push(int a) { arr[++st] = a; }
+    int pop() { return arr[st--]; }
+     */
     void clear() { while(st) printf(" %d", s[--st]); }
 };

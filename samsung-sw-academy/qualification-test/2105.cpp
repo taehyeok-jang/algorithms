@@ -10,6 +10,7 @@ int dx[4] = {1, 1, -1, -1};
 int dy[4] = {-1, 1, 1, -1};
 
 bool out_of_bounds(int x, int y) { return x<0||x>=N||y<0||y>=N; }
+int max(int a, int b) { return a>b? a:b; }
 
 int draw(int a, int b, int x, int y) {
 
@@ -25,8 +26,6 @@ int draw(int a, int b, int x, int y) {
     }
     return count;
 }
-
-int max(int a, int b) { return a>b? a:b; }
 
 int main() {
 
@@ -61,3 +60,4 @@ int main() {
 
     return 0;
 }
+
