@@ -60,3 +60,56 @@ int main() {
 
     return 0;
 }
+
+/*
+====================================================
+ std::lower_bound / std::upper_bound 
+====================================================
+
+DEF. 
+----------------------------------------------------
+template< class ForwardIt, class T >
+ForwardIt lower_bound( ForwardIt first, ForwardIt last, const T& value );
+
+template< class ForwardIt, class T >
+ForwardIt upper_bound( ForwardIt first, ForwardIt last, const T& value );
+
+Difference? 
+----------------------------------------------------
+- lower_bound : return an index of first element (>= value).
+- upper_bound : return an index of first element (> value).
+
+E.g. 
+----------------------------------------------------
+arr = {1, 2, 4, 4, 4, 7, 9}
+
+lower_bound(arr, arr+7, 4) → arr+2 (4, the first 4 among 4's.)
+upper_bound(arr, arr+7, 4) → arr+5 (7, the first element greater than 4.)
+
+즉:
+
+          lower_bound
+              ↓
+arr = {1, 2, [4, 4, 4], 7, 9}
+                        ↑
+                  upper_bound
+
+applications.
+----------------------------------------------------
+
+// 1. check the existence of a value. 
+auto it = lower_bound(arr.begin(), arr.end(), x);
+if (it != arr.end() && *it == x) {
+    // x exists.
+}
+
+// 2. counting; multiset (allow duplicates)
+int count = upper_bound(arr.begin(), arr.end(), x) 
+          - lower_bound(arr.begin(), arr.end(), x);
+
+// 3. floor / ceil 
+// ceil: lower_bound → minimum among elements >= x
+// floor: upper_bound-1 → maximum among elements <= x.
+
+====================================================
+*/
