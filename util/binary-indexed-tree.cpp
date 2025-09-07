@@ -2,6 +2,13 @@
 
 using namespace std;
 
+// Segment Tree: A binary tree data structure that stores information about array segments (ranges).
+// Each node represents an interval [l, r] and aggregates values (e.g., sum, min, max) over that range. 
+// It supports:
+//  - Range queries in O(log n)
+//  - Point or range updates in O(log n)
+// The entire tree can be built in O(n).
+
 class segment_tree {
 public:
     int size;
